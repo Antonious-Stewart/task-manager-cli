@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
-
 	if len(os.Args) < 2 {
 		log.Fatal("No command line args passed:", flag.Args())
 	}
