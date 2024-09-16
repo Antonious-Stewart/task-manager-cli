@@ -1,0 +1,23 @@
+[
+  {
+    "ID": 1,
+    "Description": "Buy meat",
+    "CreatedAt": "2024-09-15T22:28:49.463702-04:00",
+    "UpdatedAt": "2024-09-15T22:28:49.463702-04:00",
+    "Status": "todo"
+  },
+  {
+    "ID": 2,
+    "Description": "Buy chicken",
+    "CreatedAt": "2024-09-15T22:28:51.007871-04:00",
+    "UpdatedAt": "2024-09-15T22:28:51.007871-04:00",
+    "Status": "todo"
+  },
+  {
+    "ID": 3,
+    "Description": "Buy milk",
+    "CreatedAt": "2024-09-15T22:29:11.228322-04:00",
+    "UpdatedAt": "2024-09-15T22:29:11.228322-04:00",
+    "Status": "todo"
+  }
+]
