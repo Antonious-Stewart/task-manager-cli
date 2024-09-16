@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"log"
 	"os"
 
 	"github.com/Antonious-Stewart/task-manager-cli/internal/commands"
@@ -11,8 +11,7 @@ import (
 func main() {
 
 	if len(os.Args) < 2 {
-		fmt.Println("No command line args passed:", flag.Args())
-		os.Exit(2)
+		log.Fatal("No command line args passed:", flag.Args())
 	}
 
 	switch command := os.Args[1]; command {
