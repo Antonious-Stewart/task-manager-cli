@@ -2,6 +2,7 @@ package commands
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 	"os"
 	"path/filepath"
@@ -10,25 +11,41 @@ import (
 	"github.com/Antonious-Stewart/task-manager-cli/internal/types"
 )
 
-func AddTask(title string) {
+func errFatal(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func getPath() (string, error) {
 	path, err := filepath.Abs("../../internal/storage/tasks.json")
 
 	if err != nil {
-		log.Fatal(err.Error())
+		return "", err
 	}
+
+	return path, nil
+}
+
+func AddTask() {
+	if len(os.Args[1:]) != 2 {
+		log.Fatal(errors.New("add requires two arguments"))
+	}
+
+	title := os.Args[2]
+	path, err := getPath()
+
+	errFatal(err)
 
 	file, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR, 0666)
 
-	if err != nil {
-		log.Fatal(err.Error())
-	}
+	errFatal(err)
+
 	defer file.Close()
 
 	bytes, err := os.ReadFile(path)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	errFatal(err)
 
 	var collection []types.Task
 
@@ -43,9 +60,8 @@ func AddTask(title string) {
 			},
 		}
 		data, err := json.Marshal(collection)
-		if err != nil {
-			log.Fatal(err)
-		}
+
+		errFatal(err)
 
 		file.WriteString(string(data))
 		return
@@ -53,9 +69,7 @@ func AddTask(title string) {
 
 	err = json.Unmarshal(bytes, &collection)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	errFatal(err)
 
 	collection = append(collection, types.Task{
 		ID:          int64(len(collection)) + 1,
@@ -67,12 +81,59 @@ func AddTask(title string) {
 
 	fileData, err := json.Marshal(collection)
 
-	if err != nil {
-		log.Fatal(err.Error())
-	}
+	errFatal(err)
 
 	err = os.WriteFile(path, fileData, 0666)
-	if err != nil {
-		log.Fatal(err.Error())
+	errFatal(err)
+
+	log.Println("Created Successfully.")
+}
+
+func List() {
+	path, err := getPath()
+
+	errFatal(err)
+
+	bytes, err := os.ReadFile(path)
+
+	errFatal(err)
+
+	if string(bytes) == "" {
+		log.Println("No task found. Try add some tasks in order to see them in a list.")
+		return
 	}
+
+	var data []types.Task
+	err = json.Unmarshal(bytes, &data)
+
+	errFatal(err)
+
+	var positionalArg string
+
+	if len(os.Args) > 2 {
+		positionalArg = os.Args[2]
+	}
+
+	switch positionalArg {
+	case types.TODO.String():
+		printTodoTasks(&data)
+	default:
+		printAllTasks(&data)
+	}
+}
+
+func printAllTasks(data *[]types.Task) {
+	for _, chunk := range *data {
+		log.Printf("%v\n", chunk)
+	}
+	log.Println("Done printing all tasks....")
+}
+
+func printTodoTasks(data *[]types.Task) {
+	for _, chunk := range *data {
+		if chunk.Status == types.TODO.String() {
+			log.Println(chunk)
+		}
+	}
+	log.Println("Done printing all tasks....")
 }
