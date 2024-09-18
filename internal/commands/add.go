@@ -31,17 +31,18 @@ func AddTask() {
 	errFatal(err)
 
 	var collection []types.Task
+	var task types.Task
 
 	if string(bytes) == "" {
-		collection = []types.Task{
-			{
-				ID:          1,
-				Description: title,
-				CreatedAt:   time.Now(),
-				UpdatedAt:   time.Now(),
-				Status:      types.TODO.String(),
-			},
+		task = types.Task{
+			ID:          1,
+			Description: title,
+			CreatedAt:   time.Now(),
+			UpdatedAt:   time.Now(),
+			Status:      types.TODO.String(),
 		}
+
+		collection = []types.Task{task}
 		data, err := json.Marshal(collection)
 
 		errFatal(err)
@@ -54,13 +55,15 @@ func AddTask() {
 
 	errFatal(err)
 
-	collection = append(collection, types.Task{
+	task = types.Task{
 		ID:          int64(len(collection)) + 1,
 		Description: title,
 		CreatedAt:   time.Now(),
 		UpdatedAt:   time.Now(),
 		Status:      types.TODO.String(),
-	})
+	}
+
+	collection = append(collection, task)
 
 	fileData, err := json.Marshal(collection)
 
@@ -69,5 +72,5 @@ func AddTask() {
 	err = os.WriteFile(path, fileData, 0666)
 	errFatal(err)
 
-	log.Println("Created Successfully.")
+	log.Printf("Task added successfully (ID: %d)", task.ID)
 }

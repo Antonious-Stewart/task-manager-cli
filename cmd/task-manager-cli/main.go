@@ -18,5 +18,7 @@ func main() {
 		commands.AddTask()
 	case "list":
 		commands.List()
+	case "delete":
+		commands.Delete()
 	}
 }
