@@ -19,14 +19,5 @@ const (
 )
 
 func (s Status) String() string {
-	switch s {
-	case TODO:
-		return "todo"
-	case IN_PROGRESS:
-		return "in_progress"
-	case DONE:
-		return "done"
-	default:
-		return "unknown"
-	}
+	return [...]string{"todo", "in-progress", "done"}[s]
 }

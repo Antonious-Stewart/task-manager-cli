@@ -1,1 +1,30 @@
-[{"ID":1,"Description":"Buy chicken","CreatedAt":"2024-09-16T21:48:33.305434-04:00","UpdatedAt":"2024-09-16T21:48:33.305434-04:00","Status":"todo"},{"ID":2,"Description":"Buy chicken","CreatedAt":"2024-09-16T21:50:35.883311-04:00","UpdatedAt":"2024-09-16T21:50:35.883311-04:00","Status":"in-progress"}]
+[
+  {
+    "ID": 1,
+    "Description": "Buy chicken",
+    "CreatedAt": "2024-09-16T21:48:33.305434-04:00",
+    "UpdatedAt": "2024-09-16T21:48:33.305434-04:00",
+    "Status": "todo"
+  },
+  {
+    "ID": 2,
+    "Description": "Buy chicken",
+    "CreatedAt": "2024-09-16T21:50:35.883311-04:00",
+    "UpdatedAt": "2024-09-16T21:50:35.883311-04:00",
+    "Status": "in-progress"
+  },
+  {
+    "ID": 3,
+    "Description": "Buy meat",
+    "CreatedAt": "2024-09-17T22:24:34.960527-04:00",
+    "UpdatedAt": "2024-09-17T22:24:34.960527-04:00",
+    "Status": "done"
+  },
+  {
+    "ID": 4,
+    "Description": "Buy milk",
+    "CreatedAt": "2024-09-17T22:24:50.416708-04:00",
+    "UpdatedAt": "2024-09-17T22:24:50.416708-04:00",
+    "Status": "todo"
+  }
+]

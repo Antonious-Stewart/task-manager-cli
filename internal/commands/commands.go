@@ -116,24 +116,30 @@ func List() {
 
 	switch positionalArg {
 	case types.TODO.String():
-		printTodoTasks(&data)
+		printTasks(&data, types.TODO)
+	case types.IN_PROGRESS.String():
+		printTasks(&data, types.IN_PROGRESS)
+	case types.DONE.String():
+		printTasks(&data, types.DONE)
 	default:
+		if positionalArg != "" {
+			log.Fatalf("Unknown flag '%s' please try again", positionalArg)
+		}
 		printAllTasks(&data)
 	}
+	log.Println("Done printing all tasks....")
 }
 
 func printAllTasks(data *[]types.Task) {
 	for _, chunk := range *data {
-		log.Printf("%v\n", chunk)
+		log.Println(chunk)
 	}
-	log.Println("Done printing all tasks....")
 }
 
-func printTodoTasks(data *[]types.Task) {
+func printTasks(data *[]types.Task, flag types.Status) {
 	for _, chunk := range *data {
-		if chunk.Status == types.TODO.String() {
+		if chunk.Status == flag.String() {
 			log.Println(chunk)
 		}
 	}
-	log.Println("Done printing all tasks....")
 }
