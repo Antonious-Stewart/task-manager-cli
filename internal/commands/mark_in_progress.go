@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"time"
 
 	"github.com/Antonious-Stewart/task-manager-cli/internal/types"
 )
 
-func Delete() {
+func MarkInProgress() {
 	id := parseID()
 
 	path, err := getPath()
@@ -18,6 +19,7 @@ func Delete() {
 	}
 
 	var data []*types.Task
+
 	file, err := os.ReadFile(path)
 
 	if err != nil {
@@ -30,31 +32,30 @@ func Delete() {
 		log.Fatal(err)
 	}
 
-	removed := false
-
-	for i, element := range data {
-		if element.ID == id {
-			data = append(data[:i], data[i+1:]...)
-			removed = true
+	updated := false
+	for _, task := range data {
+		if task.ID == id {
+			task.Status = types.IN_PROGRESS.String()
+			task.UpdatedAt = time.Now()
+			updated = true
 		}
 	}
 
-	if !removed {
-		log.Printf("No task found with that ID: %v", id)
-		return
+	if !updated {
+		log.Fatal("No task was updated")
 	}
 
-	writeBack, err := json.Marshal(data)
+	writeback, err := json.Marshal(data)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = os.WriteFile(path, writeBack, 0666)
+	err = os.WriteFile(path, writeback, 0666)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println("Deleted Successfully")
+	log.Printf("Task was updated")
 }

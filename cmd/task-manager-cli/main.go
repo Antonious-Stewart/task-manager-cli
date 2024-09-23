@@ -16,6 +16,10 @@ func main() {
 	switch command := os.Args[1]; command {
 	case "add":
 		commands.AddTask()
+	case "mark-in-progress":
+		commands.MarkInProgress()
+	case "mark-done":
+		// commands.MarkDone()
 	case "list":
 		commands.List()
 	case "delete":

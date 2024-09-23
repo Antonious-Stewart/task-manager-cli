@@ -3,8 +3,8 @@
     "ID": 1,
     "Description": "Buy chicken",
     "CreatedAt": "2024-09-16T21:48:33.305434-04:00",
-    "UpdatedAt": "2024-09-16T21:48:33.305434-04:00",
-    "Status": "todo"
+    "UpdatedAt": "2024-09-23T17:07:29.665849-04:00",
+    "Status": "in-progress"
   },
   {
     "ID": 2,
@@ -38,8 +38,8 @@
     "ID": 7,
     "Description": "Buy dog food",
     "CreatedAt": "2024-09-17T22:39:11.90602-04:00",
-    "UpdatedAt": "2024-09-17T22:39:11.906021-04:00",
-    "Status": "todo"
+    "UpdatedAt": "2024-09-23T17:08:02.2634-04:00",
+    "Status": "in-progress"
   },
   {
     "ID": 8,
