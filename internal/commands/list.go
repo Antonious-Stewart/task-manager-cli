@@ -55,9 +55,9 @@ func printAllTasks(data *[]types.Task) {
 	}
 }
 
-func printTasks(data *[]types.Task, flag types.Status) {
+func printTasks(data *[]types.Task, filter types.Status) {
 	for _, chunk := range *data {
-		if chunk.Status == flag.String() {
+		if chunk.Status == filter.String() {
 			log.Println(chunk)
 		}
 	}
