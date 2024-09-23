@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/Antonious-Stewart/task-manager-cli/internal/commands"
+	"github.com/Antonious-Stewart/task-manager-cli/internal/types"
 )
 
 func main() {
@@ -17,12 +18,18 @@ func main() {
 	case "add":
 		commands.AddTask()
 	case "mark-in-progress":
-		commands.MarkInProgress()
+		commands.Mark(types.IN_PROGRESS)
 	case "mark-done":
-		// commands.MarkDone()
+		commands.Mark(types.DONE)
+	case "mark-todo":
+		commands.Mark(types.TODO)
 	case "list":
 		commands.List()
 	case "delete":
 		commands.Delete()
+	case "update":
+		commands.Update()
+	default:
+		log.Printf("Unrecognized command '%v'\n", os.Args[1])
 	}
 }

@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"log"
 	"os"
-
-	"github.com/Antonious-Stewart/task-manager-cli/internal/types"
 )
 
 func Delete() {
@@ -13,22 +11,9 @@ func Delete() {
 
 	path, err := getPath()
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	errFatal(err)
 
-	var data []*types.Task
-	file, err := os.ReadFile(path)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = json.Unmarshal(file, &data)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	data := unmarshalTask(path)
 
 	removed := false
 
@@ -46,15 +31,11 @@ func Delete() {
 
 	writeBack, err := json.Marshal(data)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	errFatal(err)
 
 	err = os.WriteFile(path, writeBack, 0666)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	errFatal(err)
 
 	log.Println("Deleted Successfully")
 }

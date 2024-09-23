@@ -9,33 +9,18 @@ import (
 	"github.com/Antonious-Stewart/task-manager-cli/internal/types"
 )
 
-func MarkInProgress() {
+func Mark(status types.Status) {
 	id := parseID()
-
 	path, err := getPath()
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	errFatal(err)
 
-	var data []*types.Task
-
-	file, err := os.ReadFile(path)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = json.Unmarshal(file, &data)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	data := unmarshalTask(path)
 
 	updated := false
 	for _, task := range data {
 		if task.ID == id {
-			task.Status = types.IN_PROGRESS.String()
+			task.Status = status.String()
 			task.UpdatedAt = time.Now()
 			updated = true
 		}
@@ -47,15 +32,11 @@ func MarkInProgress() {
 
 	writeback, err := json.Marshal(data)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	errFatal(err)
 
 	err = os.WriteFile(path, writeback, 0666)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	errFatal(err)
 
 	log.Printf("Task was updated")
 }

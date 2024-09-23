@@ -1,10 +1,13 @@
 package commands
 
 import (
+	"encoding/json"
 	"log"
 	"os"
 	"path/filepath"
 	"strconv"
+
+	"github.com/Antonious-Stewart/task-manager-cli/internal/types"
 )
 
 func errFatal(err error) {
@@ -35,4 +38,21 @@ func parseID() int64 {
 	}
 
 	return id
+}
+
+func unmarshalTask(path string) []*types.Task {
+	bytes, err := os.ReadFile(path)
+
+	if err != nil {
+		log.Fatal()
+	}
+
+	var data []*types.Task
+	err = json.Unmarshal(bytes, &data)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return data
 }
